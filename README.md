@@ -33,13 +33,14 @@ Run automated tests for your application (if any).
 Generate a report on code coverage by tests (if possible).
 
 How to run the project:
-1. Clone the repository
+1. Clone the repository https://github.com/Kairick/currency-conversion.git
 2. Create a .env file in the root directory with the following content:
 ```
+DEBUG=False
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=currency
-POSTGRES_HOST=db
+POSTGRES_HOST=database
 POSTGRES_PORT=5432
 API_KEY=your_api_key
 APY_URL=https://api.currencyapi.com/v3/
