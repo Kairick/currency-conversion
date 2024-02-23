@@ -37,14 +37,6 @@ jobs:
         run: |
           poetry config virtualenvs.create false && poetry install
 
-      - name: Set environment variables
-        run: |
-          export POSTGRES_DB=test_db
-          export POSTGRES_USER=test_user
-          export POSTGRES_PASSWORD=test_password
-          export POSTGRES_HOST=localhost
-          export POSTGRES_PORT=5432
-
       - name: Wait for PostgreSQL
         run: |
           sudo apt-get install -y wait-for-it
@@ -56,4 +48,9 @@ jobs:
 
       - name: Run pytest with test database
         run: |
+          export POSTGRES_DB=test_db
+          export POSTGRES_USER=test_user
+          export POSTGRES_PASSWORD=test_password
+          export POSTGRES_HOST=localhost
+          export POSTGRES_PORT=5432
           python -m pytest --cov=. --cov-fail-under=80
