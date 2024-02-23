@@ -35,7 +35,7 @@ class CurrencyService:
         source = await self.repo.get_by_code(data.source)
         target = await self.repo.get_by_code(data.target)
         if not source or not target:
-            HTTPException(
+            raise HTTPException(
                 status_code=400,
                 detail='Invalid source or target currency code.'
             )
