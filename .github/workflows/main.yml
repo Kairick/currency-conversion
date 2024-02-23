@@ -16,7 +16,7 @@ jobs:
           POSTGRES_PASSWORD: test_password
           POSTGRES_DB: test_db
         ports:
-          - 5432:5432
+          - 54433:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
@@ -52,5 +52,5 @@ jobs:
           export POSTGRES_USER=test_user
           export POSTGRES_PASSWORD=test_password
           export POSTGRES_HOST=localhost
-          export POSTGRES_PORT=5432
+          export POSTGRES_PORT=54433
           python -m pytest --cov=. --cov-fail-under=80
