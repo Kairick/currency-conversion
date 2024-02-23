@@ -1,0 +1,56 @@
+name: FastAPI CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test_and_linter:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test_db
+        ports:
+          - 54433:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install poetry
+        run: |
+          apt-get update && apt-get install -y build-essential
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.create false && poetry install
+
+      - name: Wait for PostgreSQL
+        run: |
+          sudo apt-get install -y wait-for-it
+          wait-for-it localhost:54433 --timeout=60
+
+      - name: Run Ruff linter
+        run: |
+          ruff check .
+
+      - name: Run pytest with test database
+        run: |
+          export POSTGRES_DB=test_db
+          export POSTGRES_USER=test
+          export POSTGRES_PASSWORD=password
+          export POSTGRES_HOST=localhost
+          export POSTGRES_PORT=54433
+          python -m pytest --cov=. --cov-fail-under=75
