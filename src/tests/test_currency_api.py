@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+import os
 from httpx import AsyncClient
 
 from application import app
