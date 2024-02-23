@@ -49,7 +49,7 @@ jobs:
       - name: Run pytest with test database
         run: |
           export POSTGRES_DB=test_db
-          export POSTGRES_USER=user
+          export POSTGRES_USER=test
           export POSTGRES_PASSWORD=password
           export POSTGRES_HOST=localhost
           export POSTGRES_PORT=54433
