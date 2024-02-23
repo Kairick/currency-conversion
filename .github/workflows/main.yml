@@ -45,6 +45,11 @@ jobs:
           export POSTGRES_HOST=localhost
           export POSTGRES_PORT=5432
 
+      - name: Wait for PostgreSQL
+        run: |
+          sudo apt-get install -y wait-for-it
+          wait-for-it localhost:5432 --timeout=60
+
       - name: Run Ruff linter
         run: |
           ruff check .
