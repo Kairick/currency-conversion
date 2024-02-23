@@ -6,12 +6,10 @@ COPY ./src /app/src
 COPY poetry.lock pyproject.toml /app/src/
 
 RUN apt-get update && apt-get install -y build-essential
+RUN apt-get install -y wait-for-it
 
 RUN pip install poetry
 
 RUN poetry config virtualenvs.create false && poetry install --no-dev
-
-COPY deploy/scripts/wait-for-it.sh  /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
 
 EXPOSE 8000

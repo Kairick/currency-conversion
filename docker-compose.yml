@@ -7,7 +7,6 @@ x-base-data: &cc-based
     dockerfile: ./deploy/Dockerfile
   env_file:
     - .env
-  command: ["./wait-for-it.sh",  "database:5432"]
 
 
 services:
@@ -20,7 +19,7 @@ services:
     depends_on:
       - migration
       - database
-    command: ["gunicorn", "application:app", "-w=4", "-k=uvicorn.workers.UvicornWorker", "-b=0.0.0.0:8000"]
+    command: ["wait-for-it", "database:5432", "--", "gunicorn", "application:app", "-w=4", "-k=uvicorn.workers.UvicornWorker", "-b=0.0.0.0:8000"]
 
   migration:
     <<: *cc-based
@@ -28,7 +27,7 @@ services:
     container_name: cc-migration
     depends_on:
       - database
-    command: ["alembic", "upgrade", "head" ]
+    command: ["wait-for-it", "database:5432", "--", "alembic", "upgrade", "head" ]
 
   database:
     container_name: cc-database
@@ -65,9 +64,9 @@ services:
       - .env
 
 volumes:
-    pgdata:
-    pgdata_test:
+  pgdata:
+  pgdata_test:
 
 networks:
-    default:
-        name: cc-network
+  default:
+    name: cc-network
