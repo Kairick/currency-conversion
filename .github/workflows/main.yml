@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  test and linter:
+  test_and_linter:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -53,4 +53,4 @@ jobs:
           export POSTGRES_PASSWORD=password
           export POSTGRES_HOST=localhost
           export POSTGRES_PORT=54433
-          python -m pytest --cov=. --cov-fail-under=75
+          python -m pytest --cov=. --cov-fail-under=85
