@@ -22,8 +22,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./deploy/Dockerfile
+          context: ./currency-conversion
+          file: currency-conversion/deploy/Dockerfile
           push: true
           tags: ghcr.io/kairick/currency_convertor:latest
 
