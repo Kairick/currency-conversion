@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  test:
+  test and linter:
     runs-on: ubuntu-latest
     services:
       postgres:
