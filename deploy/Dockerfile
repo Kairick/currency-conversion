@@ -11,4 +11,7 @@ RUN pip install poetry
 
 RUN poetry config virtualenvs.create false && poetry install --no-dev
 
+COPY deploy/scripts/wait-for-it.sh  /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+
 EXPOSE 8000
