@@ -49,8 +49,8 @@ jobs:
       - name: Run pytest with test database
         run: |
           export POSTGRES_DB=test_db
-          export POSTGRES_USER=test_user
-          export POSTGRES_PASSWORD=test_password
+          export POSTGRES_USER=user
+          export POSTGRES_PASSWORD=password
           export POSTGRES_HOST=localhost
           export POSTGRES_PORT=54433
           python -m pytest --cov=. --cov-fail-under=80
