@@ -1,0 +1,51 @@
+name: FastAPI CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      app:
+        build:
+          context: .
+          dockerfile: ./deploy/Dockerfile
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_HOST: database
+          POSTGRES_PORT: 5432
+          DIALECT: postgresql
+          DRIVER: psycopg
+        ports:
+          - 8000:8000
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Ruff linter
+        run: |
+          ruff check .
+
+      - name: Run pytest with test database
+        run: |
+          python -m pytest --cov=. --cov-fail-under=80
+
+          
