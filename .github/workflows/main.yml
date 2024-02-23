@@ -15,7 +15,6 @@ jobs:
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
           POSTGRES_DB: test_db
-
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -23,17 +22,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
+
       - name: Install poetry
         run: |
           apt-get update && apt-get install -y build-essential
           pip install poetry
+
       - name: Install dependencies
         run: |
-            poetry config virtualenvs.create false && poetry install
+          poetry config virtualenvs.create false && poetry install
+
       - name: Set environment variables
         run: |
           export POSTGRES_DB=test_db
