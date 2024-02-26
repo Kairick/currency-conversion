@@ -43,7 +43,7 @@ POSTGRES_DB=currency
 POSTGRES_HOST=database
 POSTGRES_PORT=5432
 API_KEY=your_api_key
-APY_URL=https://api.currencyapi.com/v3/
+API_URL=https://api.currencyapi.com/v3/
 ```
 3. Run the command "docker-compose -f docker-compose.yml up --build -d"
 4. The API will be available at http://0.0.0.0:8000
